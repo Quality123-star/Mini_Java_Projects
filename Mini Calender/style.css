@@ -13,7 +13,7 @@
     justify-content: center;
 }
 .calendar{
-    width: 300px;
+    width: 350px;
     height: 250px;
     background: #fff;
     display: flex;
@@ -30,7 +30,7 @@
     font-size: 24px;
 }
 .right{
-    width: 42%;
+    width: 50%;
     background: #29288b;
     color: #fff;
     border-top-right-radius: 10px;
