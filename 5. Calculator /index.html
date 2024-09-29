@@ -11,7 +11,7 @@
         <div class="calculator">
             <form>
                 <div class="display">
-                    <input type="text" name="display" id="display">
+                    <input type="text" name="display" id="display" oninput="readDisplay()" onclick="readDisplay()">
                 </div>
                 <div>
                     <input type="button" value="AC" onclick="display.value = ''" class="operator">
@@ -41,32 +41,66 @@
                     <input type="button" value="00" onclick="display.value += '00'" class="operator">
                     <input type="button" value="0" onclick="display.value += '0'" class="operator">
                     <input type="button" value="^" onclick="document.getElementById('display').value += '^'" class="operator">
-                    <input type="button" value="=" onclick="display.value = eval(display.value)" class="operator" id="equal">
+                    <input type="button" value="=" onclick="evaluateExpression()" class="operator">
                 </div>
             </form>
         </div>
     </div>
     <script>
-            let display = document.getElementById('display');
-            let equal = document.getElementById('equal')
-            let expression = display.value;
         
-        function evaluateExpression() {
+        function readDisplay() {
+            let display = document.getElementById('display');
             
-            // Replace '^' with '**' for exponentiation
-            expression = expression.replace(/\^/g, '**');
-
-            try {
-                // Evaluate the expression safely
-                display.value = eval(expression);
-            } catch (e) {
-                display.value = 'Error';
+            // Get the last character typed
+            let lastChar = display.value.slice(-1);
+            
+            // Replace common operators with their spoken equivalents
+            if (lastChar === '-') {
+                lastChar = 'minus';
+            } else if (lastChar === '/') {
+                lastChar = 'divided by';
             }
+            const speech = new SpeechSynthesisUtterance(lastChar);
+            window.speechSynthesis.speak(speech);
+        }
+        
+
+        document.getElementById('display').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter' || event.key === '=') {
+                evaluateExpression();
+                event.preventDefault();
+            }
+        });
+
+
+        
+         // Function to evaluate the expression and read out the result
+        function evaluateExpression() {
+        let display = document.getElementById('display');
+        let expression = display.value;
+
+        // Replace '^' with '**' for exponentiation
+        expression = expression.replace(/\^/g, '**');
+
+        try {
+            // Evaluate the expression safely
+            let result = eval(expression);
+            display.value = result;
+
+            // Read the result out loud
+            const resultSpeech = new SpeechSynthesisUtterance(result.toString());
+            window.speechSynthesis.speak(resultSpeech);
+
+        } catch (e) {
+            display.value = 'Error';
+
+            // Read out "Error" if there's an issue
+            const errorSpeech = new SpeechSynthesisUtterance('Error');
+            window.speechSynthesis.speak(errorSpeech);
+        }
         }
 
-        equal.addEventListener("click", () => {
-            evaluateExpression();
-        });
+        
     </script>
 </body>
 </html>
