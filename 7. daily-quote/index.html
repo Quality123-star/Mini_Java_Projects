@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote of the day</title>
+    <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+ <div class="quote-box">
+    <h2>Quote of the day</h2>
+    <blockquote id="quote">Loading...</blockquote>
+    <span id="author">Loading...</span>
+    <div>
+        <button onclick="getquote(api_url)">New Quote</button>
+        <button onclick="tweet()"><img src="twitter.png">Tweet</button>
+        <button onclick="post()"><img src="linkedin.png">Post</button>
+        <button onclick="play(quote.innerHTML, author.innerHTML)"><img src="play.png">Play</button>
+    </div>
+ </div>
+ 
+
+<script>
+const quote = document.getElementById("quote");
+const author = document.getElementById("author");
+const api_url = "https://api.quotable.io/quotes/random";
+
+
+
+async function getquote(url){
+    const response = await fetch(url);
+    var data = await response.json(); 
+    quote.innerHTML = data[0].content;
+    author.innerHTML = data[0].author;
+}
+
+getquote(api_url);
+
+function play(quote, author) {
+                const message = `${author} once said ${quote}`;
+                const speech = new SpeechSynthesisUtterance(message);
+                window.speechSynthesis.speak(speech);
+            }
+
+function tweet(){
+    window.open("https://twitter.com/intent/tweet?text=" + quote.innerHTML + "%0A ---- by " + author.innerHTML, "Tweet Window", "width=600, height=300");
+}
+
+function post() {
+   window.open("https://www.linkedin.com/sharing/share-offsite/?url=https://example.com&title=" + quote.innerHTML + "%0A ---- by " + author.innerHTML, "LinkedIn Window", "width=600, height=300");
+}
+
+
+</script>
+
+</body>
+</html>
