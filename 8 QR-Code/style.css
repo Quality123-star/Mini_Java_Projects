@@ -80,11 +80,3 @@ body{
         transform: translateX(0);
     }
 }
-
-.watch-link{
-    display: block;
-    font-size: 12px;
-    width: fit-content;
-    margin: auto;
-    text-decoration: none;
-}
