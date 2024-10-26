@@ -15,3 +15,16 @@ function generateQR(){
     }
     
 }
+
+function downloadQR() {
+    if (qrImage.src) {  // Check if a QR code is generated
+        const link = document.createElement('a');
+        link.href = qrImage.src;
+        link.download = 'qr-code.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } else {
+        alert("Please generate a QR code first.");
+    }
+}
