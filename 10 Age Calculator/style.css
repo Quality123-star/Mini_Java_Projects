@@ -71,11 +71,3 @@
 #result span{
     color: #ffff76;
 }
-.watch-link{
-    position: fixed;
-    bottom: 10%;
-    right: 5%;
-    font-size: 12px;
-    text-decoration: none;
-    color: #000;
-}
