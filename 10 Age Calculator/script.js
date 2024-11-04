@@ -39,7 +39,7 @@ function calculateAge(){
     result.innerHTML = `You are <span>${y3}</span> years, <span>${m3}</span> months and <span>${d3}</span> days old`;
     setTimeout(() => {
         readAge(y3, m3, d3)
-    }, 10000);
+    }, 5000);
     
 }
 
