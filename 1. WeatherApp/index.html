@@ -9,7 +9,7 @@
         <div class="card">
             <div class="search">
                 <input type="text" placeholder="enter city name" spellcheck="false">
-                <button><img src="images/search.png"></button>
+                <button onclick="checkWeather(searchbox.value)"><img src="images/search.png"></button>
             </div>
             <div class="error">
                 <p>Sorry! You have entered an invalid city name</p>
@@ -67,34 +67,36 @@
                 document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
                 document.querySelector(".wind").innerHTML = data.wind.speed + " Km/h";
 
-                if(data.weather[0].main == "Clouds"){
+                let weatherType = data.weather[0].main;
+
+                if(weatherType == "Clouds"){
                     weatherIcon.src = "images/clouds.png"
                 }
-                else if (data.weather[0].main == "Clear"){
+                else if (weatherType == "Clear"){
                     weatherIcon.src = "images/clear.png"
                 }
-                else if (data.weather[0].main == "Drizzle"){
+                else if (weatherType == "Drizzle"){
                     weatherIcon.src = "images/drizzle.png"
                 }
-                else if (data.weather[0].main == "Humidity"){
+                else if (weatherType == "Humidity"){
                     weatherIcon.src = "images/humidity.png"
                 }
-                else if (data.weather[0].main == "Mist"){
+                else if (weatherType == "Mist"){
                     weatherIcon.src = "images/mist.png"
                 }
-                else if (data.weather[0].main == "Rain"){
+                else if (weatherType == "Rain"){
                     weatherIcon.src = "images/rain.png"
                 }
-                else if (data.weather[0].main == "Snow"){
+                else if (weatherType == "Snow"){
                     weatherIcon.src = "images/snow.png"
                 }
-                else if (data.weather[0].main == "Wind"){
+                else if (weatherType == "Wind"){
                     weatherIcon.src = "images/wind.png"
                 }
                 document.querySelector(".accept").style.display = "block"   
                 document.querySelector(".weather").style.display = "block";
                 document.querySelector(".error").style.display = "none";
-                readWeatherCondition(data.name, data.weather[0].main);
+                readWeatherCondition(data.name, weatherType);
                 }
                 
             };
@@ -106,9 +108,6 @@
                 window.speechSynthesis.speak(speech);
             }
 
-            searchbtn.addEventListener("click", ()=>{
-                checkWeather(searchbox.value);
-            });
 
             searchbox.addEventListener('keydown', (event) => {
                 if (event.key === 'Enter') {
