@@ -36,10 +36,22 @@ async function getquote(url){
 getquote(api_url);
 
 function play(quote, author) {
-                const message = `${author} once said ${quote}`;
-                const speech = new SpeechSynthesisUtterance(message);
-                window.speechSynthesis.speak(speech);
-            }
+    // First part of the message with the author's name
+    const introMessage = `${author} once said`;
+    const introSpeech = new SpeechSynthesisUtterance(introMessage);
+
+    // Speak the intro message
+    window.speechSynthesis.speak(introSpeech);
+
+    // Wait for the intro to finish before saying the quote
+    introSpeech.onend = () => {
+        setTimeout(() => {
+            const quoteSpeech = new SpeechSynthesisUtterance(quote);
+            window.speechSynthesis.speak(quoteSpeech);
+        }, 300); // Delay of .3 second (300 milliseconds)
+    };
+}
+
 
 function tweet(){
     window.open("https://twitter.com/intent/tweet?text=" + quote.innerHTML + "%0A ---- by " + author.innerHTML, "Tweet Window", "width=600, height=300");
